@@ -12,7 +12,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
 })
 function start_next_level () {
     current_level += 1
-    if (current_level >= 2) {
+    if (current_level >= 3) {
         game.over(true)
     } else {
         tiles.loadMap(levels[current_level])

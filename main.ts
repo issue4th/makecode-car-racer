@@ -4,6 +4,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, l
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     controller.moveSprite(car)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
+    controller.moveSprite(car, 20, 20)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     car.setImage(img`
         . . . . . . a a c c a a . . . . 
@@ -78,6 +81,7 @@ function start_next_level () {
         tiles.loadMap(levels[current_level])
         tiles.placeOnRandomTile(car, assets.tile`myTile2`)
         info.startCountdown(60)
+        info.setScore(600)
     }
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -108,6 +112,9 @@ info.onCountdownEnd(function () {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
     controller.moveSprite(car, 50, 50)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
+    controller.moveSprite(car, 20, 20)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     car.setImage(img`

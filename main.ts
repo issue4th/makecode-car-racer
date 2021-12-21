@@ -196,6 +196,7 @@ controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
 let car: Sprite = null
 let current_level = 0
 let levels: tiles.WorldMap[] = []
+info.setScore(600)
 levels = [
 tiles.createMap(tilemap`level10`),
 tiles.createMap(tilemap`level6`),
@@ -226,3 +227,6 @@ car = sprites.create(img`
 controller.moveSprite(car)
 scene.cameraFollowSprite(car)
 start_next_level()
+game.onUpdateInterval(100, function () {
+    info.changeScoreBy(-1)
+})

@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const LevelSelector = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-	
+    controller.moveSprite(car)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     controller.moveSprite(car)
@@ -255,7 +255,6 @@ function start_level () {
         scene.cameraFollowSprite(car)
         tiles.placeOnRandomTile(car, assets.tile`myTile2`)
         info.startCountdown(60)
-        info.setScore(600)
     }
 }
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile37`, function (sprite, location) {
@@ -288,6 +287,7 @@ controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
 let current_level = 0
 let car: Sprite = null
 let levels: tiles.WorldMap[] = []
+let claimed = false
 scene.setBackgroundColor(7)
 levels = [
 tiles.createMap(tilemap`level10`),
@@ -298,3 +298,13 @@ tiles.createMap(tilemap`level16`),
 tiles.createMap(tilemap`level39`)
 ]
 select_a_level()
+game.onUpdate(function () {
+    if (car.tileKindAt(TileDirection.Center, assets.tile`myTile25`)) {
+        if (!(claimed)) {
+            info.changeScoreBy(1)
+            claimed = true
+        }
+    } else {
+        claimed = false
+    }
+})

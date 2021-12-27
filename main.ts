@@ -1,5 +1,8 @@
+namespace SpriteKind {
+    export const LevelSelector = SpriteKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
-    controller.moveSprite(car)
+	
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     controller.moveSprite(car)
@@ -59,6 +62,34 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile46`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
 })
+function select_a_level () {
+    tiles.setTilemap(tilemap`level40`)
+    car = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . 3 3 3 3 3 3 3 3 . . . . 
+        . . . 3 d 3 3 3 3 3 3 c 3 . . . 
+        . . 3 c d 3 3 3 3 3 3 c c 3 . . 
+        . 3 c c d d d d d d 3 c c d 3 d 
+        . 3 c 3 a a a a a a a b c d 3 3 
+        . 3 3 a b b a b b b a a b d 3 3 
+        . 3 a b b b a b b b b a 3 3 3 3 
+        . a a 3 3 3 a 3 3 3 3 3 a 3 3 3 
+        . a a a a a a f a a a f a 3 d d 
+        . a a a a a a f a a f a a a 3 d 
+        . a a a a a a f f f a a a a a a 
+        . a f f f f a a a a f f f a a a 
+        . . f f f f f a a f f f f f a . 
+        . . . f f f . . . . f f f f . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.LevelSelector)
+    tiles.placeOnRandomTile(car, assets.tile`myTile2`)
+    scene.cameraFollowSprite(car)
+    controller.moveSprite(car)
+}
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile41`, function (sprite, location) {
+    current_level = 1
+    start_level()
+})
 controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
     car.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -79,17 +110,6 @@ controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . . . . . . . . . . . . . . 
         `)
 })
-function start_next_level () {
-    current_level += 1
-    if (current_level >= 4) {
-        game.over(true)
-    } else {
-        tiles.loadMap(levels[current_level])
-        tiles.placeOnRandomTile(car, assets.tile`myTile2`)
-        info.startCountdown(60)
-        info.setScore(600)
-    }
-}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     car.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -111,7 +131,8 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
-    start_next_level()
+    current_level += 1
+    start_level()
 })
 info.onCountdownEnd(function () {
     game.over(false)
@@ -192,6 +213,43 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . a 3 3 3 3 3 3 a . . . 
         `)
 })
+function start_level () {
+    car.destroy()
+    if (current_level >= 4) {
+        game.over(true)
+    } else {
+        tiles.loadMap(levels[current_level])
+        game.splash("Level " + current_level)
+        effects.confetti.startScreenEffect(1000)
+        car = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . 3 3 3 3 3 3 3 3 . . . . 
+            . . . 3 d 3 3 3 3 3 3 c 3 . . . 
+            . . 3 c d 3 3 3 3 3 3 c c 3 . . 
+            . 3 c c d d d d d d 3 c c d 3 d 
+            . 3 c 3 a a a a a a a b c d 3 3 
+            . 3 3 a b b a b b b a a b d 3 3 
+            . 3 a b b b a b b b b a 3 3 3 3 
+            . a a 3 3 3 a 3 3 3 3 3 a 3 3 3 
+            . a a a a a a f a a a f a 3 d d 
+            . a a a a a a f a a f a a a 3 d 
+            . a a a a a a f f f a a a a a a 
+            . a f f f f a a a a f f f a a a 
+            . . f f f f f a a f f f f f a . 
+            . . . f f f . . . . f f f f . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Player)
+        controller.moveSprite(car)
+        scene.cameraFollowSprite(car)
+        tiles.placeOnRandomTile(car, assets.tile`myTile2`)
+        info.startCountdown(60)
+        info.setScore(600)
+    }
+}
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile37`, function (sprite, location) {
+    current_level = 0
+    start_level()
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, location) {
     controller.moveSprite(car)
 })
@@ -215,10 +273,10 @@ controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . . . . . . . . . . . . . . 
         `)
 })
-let car: Sprite = null
 let current_level = 0
+let car: Sprite = null
 let levels: tiles.WorldMap[] = []
-info.setScore(600)
+scene.setBackgroundColor(7)
 levels = [
 tiles.createMap(tilemap`level10`),
 tiles.createMap(tilemap`level6`),
@@ -227,29 +285,4 @@ tiles.createMap(tilemap`level14`),
 tiles.createMap(tilemap`level16`),
 tiles.createMap(tilemap`level39`)
 ]
-current_level = -1
-scene.setBackgroundColor(7)
-car = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . 3 3 3 3 3 3 3 3 . . . . 
-    . . . 3 d 3 3 3 3 3 3 c 3 . . . 
-    . . 3 c d 3 3 3 3 3 3 c c 3 . . 
-    . 3 c c d d d d d d 3 c c d 3 d 
-    . 3 c 3 a a a a a a a b c d 3 3 
-    . 3 3 a b b a b b b a a b d 3 3 
-    . 3 a b b b a b b b b a 3 3 3 3 
-    . a a 3 3 3 a 3 3 3 3 3 a 3 3 3 
-    . a a a a a a f a a a f a 3 d d 
-    . a a a a a a f a a f a a a 3 d 
-    . a a a a a a f f f a a a a a a 
-    . a f f f f a a a a f f f a a a 
-    . . f f f f f a a f f f f f a . 
-    . . . f f f . . . . f f f f . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
-controller.moveSprite(car)
-scene.cameraFollowSprite(car)
-start_next_level()
-game.onUpdateInterval(100, function () {
-    info.changeScoreBy(-1)
-})
+select_a_level()

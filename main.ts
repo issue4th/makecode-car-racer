@@ -30,8 +30,16 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f . . . . . . f f . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile48`, function (sprite, location) {
+    current_level = 3
+    start_level()
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile45`, function (sprite, location) {
     controller.moveSprite(car, 300, 300)
+})
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile43`, function (sprite, location) {
+    current_level = 2
+    start_level()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     controller.moveSprite(car)
@@ -131,7 +139,6 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         `)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
-    current_level += 1
     start_level()
 })
 info.onCountdownEnd(function () {
@@ -139,6 +146,10 @@ info.onCountdownEnd(function () {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
     controller.moveSprite(car, 50, 50)
+})
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile55`, function (sprite, location) {
+    current_level = 4
+    start_level()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
@@ -219,6 +230,7 @@ function start_level () {
         game.over(true)
     } else {
         tiles.loadMap(levels[current_level])
+        current_level += 1
         game.splash("Level " + current_level)
         effects.confetti.startScreenEffect(1000)
         car = sprites.create(img`

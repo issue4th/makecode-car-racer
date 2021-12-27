@@ -27,6 +27,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f . . . . . . f f . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile45`, function (sprite, location) {
+    controller.moveSprite(car, 300, 300)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     controller.moveSprite(car)
 })
@@ -49,6 +52,9 @@ controller.up.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . f f a a a a a a a a f f . 
         . . . . f f . . . . . . f f . . 
         `)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile46`, function (sprite, location) {
+    controller.moveSprite(car, 300, 300)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
@@ -136,9 +142,15 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, location) {
+    controller.moveSprite(car, 300, 300)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile8`, function (sprite, location) {
     tiles.placeOnRandomTile(car, assets.tile`myTile2`)
     car.sayText(">:(", 2000, false)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile47`, function (sprite, location) {
+    controller.moveSprite(car, 300, 300)
 })
 controller.down.onEvent(ControllerButtonEvent.Repeated, function () {
     car.setImage(img`
@@ -180,6 +192,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . a 3 3 3 3 3 3 a . . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, location) {
+    controller.moveSprite(car)
+})
 controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
     car.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -209,7 +224,8 @@ tiles.createMap(tilemap`level10`),
 tiles.createMap(tilemap`level6`),
 tiles.createMap(tilemap`level12`),
 tiles.createMap(tilemap`level14`),
-tiles.createMap(tilemap`level16`)
+tiles.createMap(tilemap`level16`),
+tiles.createMap(tilemap`level39`)
 ]
 current_level = -1
 scene.setBackgroundColor(7)

@@ -33,6 +33,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile48`, function (sprite, location) {
     current_level = 3
     start_level()
+    info.startCountdown(65)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile45`, function (sprite, location) {
     controller.moveSprite(car, 300, 300)
@@ -40,6 +41,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile45`, function (sprite, 
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile43`, function (sprite, location) {
     current_level = 2
     start_level()
+    info.startCountdown(60)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     controller.moveSprite(car)
@@ -97,6 +99,7 @@ function select_a_level () {
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile41`, function (sprite, location) {
     current_level = 1
     start_level()
+    info.startCountdown(60)
 })
 controller.right.onEvent(ControllerButtonEvent.Repeated, function () {
     car.setImage(img`
@@ -144,12 +147,18 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, l
 info.onCountdownEnd(function () {
     game.over(false)
 })
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile65`, function (sprite, location) {
+    current_level = 5
+    start_level()
+    info.startCountdown(60)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile16`, function (sprite, location) {
     controller.moveSprite(car, 50, 50)
 })
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile55`, function (sprite, location) {
     current_level = 4
     start_level()
+    info.startCountdown(65)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
@@ -226,7 +235,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function start_level () {
     car.destroy()
-    if (current_level >= 4) {
+    if (current_level >= 6) {
         game.over(true)
     } else {
         tiles.loadMap(levels[current_level])
@@ -254,12 +263,12 @@ function start_level () {
         controller.moveSprite(car)
         scene.cameraFollowSprite(car)
         tiles.placeOnRandomTile(car, assets.tile`myTile2`)
-        info.startCountdown(60)
     }
 }
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile37`, function (sprite, location) {
     current_level = 0
     start_level()
+    info.startCountdown(60)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile35`, function (sprite, location) {
     controller.moveSprite(car)

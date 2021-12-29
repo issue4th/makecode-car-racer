@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const LevelSelector = SpriteKind.create()
+    export const Animation = SpriteKind.create()
 }
 /**
  * portal code
@@ -23,6 +24,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile77`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     controller.moveSprite(car)
     car.setVelocity(0, 0)
+})
+scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile105`, function (sprite, location) {
+    current_level = 10
+    start_level()
+    info.startCountdown(300)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
@@ -52,6 +58,291 @@ scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile48`, function (s
     start_level()
     info.startCountdown(65)
 })
+function start_animating () {
+    for (let location of tiles.getTilesByType(assets.tile`myTile89`)) {
+        temporary = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Animation)
+        tiles.placeOnTile(temporary, location)
+        tiles.setTileAt(location, assets.tile`myTile57`)
+        animation.runImageAnimation(
+        temporary,
+        [img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . 9 . 9 . . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . d d d d d 9 d d d d d . . . 
+            . d d d 9 d d 9 9 d d 9 9 d . . 
+            d d d d d 9 d 9 d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . 9 . . . . . . . 
+            . . . . . . . 9 9 . . . . . . . 
+            . . . . 9 . . . . . . 9 9 . . . 
+            . . . . 9 . 9 . 9 9 . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . 9 9 . . 9 9 9 9 . . 9 9 . . 
+            . . . . . 9 9 9 . . . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . d d d d d 9 d d 9 9 d . . . 
+            . d 9 9 9 d d 9 9 9 9 9 9 d . . 
+            d d 9 9 d 9 d 9 d 9 d 9 d 9 d . 
+            d 9 d d 9 9 9 9 9 9 9 9 d d d . 
+            . d d 9 d d 9 9 9 9 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . 9 9 9 9 9 9 9 . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . 9 . . . . 9 . . 9 . . . . 
+            . . . 9 . 9 . 9 9 . . 6 . . . . 
+            . . . 9 9 . . . . . . 6 9 . . . 
+            . . . 6 9 . 9 . 9 9 . . . 9 9 9 
+            . . . 6 . . . 9 . . . 9 9 . . . 
+            . 9 9 6 . . 9 9 9 9 . . 9 9 . . 
+            . 9 9 6 9 9 9 6 . . . . . . . . 
+            . . . . . . . 6 . . . . . 9 9 9 
+            . . 9 9 9 9 9 9 d d 9 9 d . . . 
+            . d 9 9 9 6 6 6 9 9 9 9 9 d . 9 
+            d d 9 9 d 6 6 9 d 9 d 9 9 9 9 . 
+            d 9 9 9 9 9 9 9 9 9 9 9 6 6 6 . 
+            . 9 9 6 6 9 9 9 9 6 6 9 9 9 . . 
+            . . 9 9 9 9 9 9 9 9 9 9 9 . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . 9 . . . . . . . 
+            . . . . . . . 9 9 . . . . . . . 
+            . . . . 9 . . . . . . 9 9 . . . 
+            . . . . 9 . 9 . 9 9 . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . 9 9 . . 9 9 9 9 . . 9 9 . . 
+            . . . . . 9 9 9 . . . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . d d d d d 9 d d 9 9 d . . . 
+            . d 9 9 9 d d 9 9 9 9 9 9 d . . 
+            d d 9 9 d 9 d 9 d 9 d 9 d 9 d . 
+            d 9 d d 9 9 9 9 9 9 9 9 d d d . 
+            . d d 9 d d 9 9 9 9 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . 9 . 9 . . . . . . . 
+            . . . . . . . 9 . . . . . . . . 
+            . . d d d d d 9 d d d d d . . . 
+            . d d d 9 d d 9 9 d d 9 9 d . . 
+            d d d d d 9 d 9 d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `,img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . d d d d d d d d d d d . . . 
+            . d d d 9 d d d 9 d d 9 9 d . . 
+            d d d d d 9 d b d d d d d 9 d . 
+            d 9 d d 9 d d d 9 d d 9 d d d . 
+            . d d 9 d d d d d d 9 d d d . . 
+            . . d d d d 9 d d d d d d . . . 
+            `],
+        150,
+        true
+        )
+    }
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile94`, function (sprite, location) {
     controller.moveSprite(car)
     car.setVelocity(0, 0)
@@ -125,6 +416,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, l
 })
 function select_a_level () {
     tiles.setTilemap(tilemap`level40`)
+    start_animating()
     car = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . 3 3 3 3 3 3 3 3 . . . . 
@@ -151,6 +443,10 @@ scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile41`, function (s
     current_level = 2
     start_level()
     info.startCountdown(60)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile102`, function (sprite, location) {
+    controller.moveSprite(car)
+    car.setVelocity(0, 0)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile73`, function (sprite, location) {
     tiles.placeOnRandomTile(car, assets.tile`myTile2`)
@@ -277,6 +573,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
     car.setVelocity(0, -150)
     controller.moveSprite(car)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile100`, function (sprite, location) {
+    controller.moveSprite(car)
+    car.setVelocity(0, 0)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile8`, function (sprite, location) {
     tiles.placeOnRandomTile(car, assets.tile`myTile2`)
     car.sayText(">:(", 2000, false)
@@ -325,6 +625,10 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . a 3 3 3 3 3 3 a . . . 
         `)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile101`, function (sprite, location) {
+    controller.moveSprite(car)
+    car.setVelocity(0, 0)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile75`, function (sprite, location) {
     tiles.placeOnRandomTile(car, assets.tile`myTile78`)
 })
@@ -333,11 +637,12 @@ function start_level () {
     game.splash("Level " + current_level)
     if (current_level >= 100) {
         tiles.loadMap(secret_levels[current_level - 100])
-    } else if (current_level >= 7) {
+    } else if (current_level >= 11) {
         game.over(true)
     } else {
         tiles.loadMap(levels[current_level])
     }
+    start_animating()
     car = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . 3 3 3 3 3 3 3 3 . . . . 
@@ -368,6 +673,10 @@ scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile37`, function (s
     current_level = 1
     start_level()
     info.startCountdown(60)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile103`, function (sprite, location) {
+    controller.moveSprite(car)
+    car.setVelocity(0, 0)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile95`, function (sprite, location) {
     controller.moveSprite(car)
@@ -431,6 +740,7 @@ controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . . . . . . . . . . . . . . 
         `)
 })
+let temporary: Sprite = null
 let current_level = 0
 let car: Sprite = null
 let secret_levels: tiles.WorldMap[] = []
@@ -445,7 +755,10 @@ tiles.createMap(tilemap`level12`),
 tiles.createMap(tilemap`level14`),
 tiles.createMap(tilemap`level16`),
 tiles.createMap(tilemap`level39`),
-tiles.createMap(tilemap`level63`)
+tiles.createMap(tilemap`level63`),
+tiles.createMap(tilemap`level68`),
+tiles.createMap(tilemap`level67`),
+tiles.createMap(tilemap`level66`)
 ]
 secret_levels = [
 tiles.createMap(tilemap`level53`),

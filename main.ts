@@ -2,15 +2,7 @@ namespace SpriteKind {
     export const LevelSelector = SpriteKind.create()
     export const Animation = SpriteKind.create()
 }
-/**
- * portal code
- */
-/**
- * overlap road code to speed up or slow down.
- */
-/**
- * speed boosters mechanics code
- */
+// speed boosters mechanics code
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
     controller.moveSprite(car)
     car.setVelocity(0, 0)
@@ -384,20 +376,13 @@ controller.up.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . . f f . . . . . . f f . . 
         `)
 })
-/**
- * dust road code
- */
-/**
- * "win" code
- */
+// "win" code
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile71`, function (sprite, location) {
     controller.moveSprite(car)
     car.setVelocity(0, 0)
     car.startEffect(effects.ashes)
 })
-/**
- * overlap 'green land' code to speed up or slow down.
- */
+// overlap 'green land' code to speed up or slow down.
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile34`, function (sprite, location) {
     controller.moveSprite(car)
     car.setVelocity(0, 0)
@@ -507,8 +492,15 @@ info.onCountdownEnd(function () {
     game.over(false)
 })
 /**
- * path code
+ * portal code
  */
+/**
+ * overlap road code to speed up or slow down.
+ */
+/**
+ * dust road code
+ */
+// path code
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile85`, function (sprite, location) {
     controller.moveSprite(car, 35, 35)
     car.setVelocity(0, 0)
@@ -542,9 +534,7 @@ scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile55`, function (s
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile20`, function (sprite, location) {
     controller.moveSprite(car, 20, 20)
 })
-/**
- * car movement mechanics
- */
+// car movement mechanics
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     car.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -666,9 +656,7 @@ function start_level () {
     scene.cameraFollowSprite(car)
     effects.confetti.startScreenEffect(1000)
 }
-/**
- * level-select pads
- */
+// level-select pads
 scene.onOverlapTile(SpriteKind.LevelSelector, assets.tile`myTile37`, function (sprite, location) {
     current_level = 1
     start_level()
@@ -699,9 +687,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile64`, function (sprite, 
     tiles.placeOnRandomTile(car, assets.tile`myTile2`)
     car.sayText(">:(", 2000, false)
 })
-/**
- * secret levels code
- */
+// secret levels code
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile69`, function (sprite, location) {
     current_level = 101
     start_level()
@@ -740,12 +726,12 @@ controller.left.onEvent(ControllerButtonEvent.Repeated, function () {
         . . . . . . . . . . . . . . . . 
         `)
 })
+let claimed = false
 let temporary: Sprite = null
 let current_level = 0
 let car: Sprite = null
 let secret_levels: tiles.WorldMap[] = []
 let levels: tiles.WorldMap[] = []
-let claimed = false
 scene.setBackgroundColor(7)
 levels = [
 tiles.createMap(tilemap`level64`),
@@ -767,9 +753,7 @@ tiles.createMap(tilemap`level62`),
 tiles.createMap(tilemap`level65`)
 ]
 select_a_level()
-/**
- * chest code
- */
+// chest code
 game.onUpdate(function () {
     if (car.tileKindAt(TileDirection.Center, assets.tile`myTile25`)) {
         if (!(claimed)) {
